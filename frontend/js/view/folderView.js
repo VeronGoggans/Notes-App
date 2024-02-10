@@ -1,6 +1,7 @@
 import { Folder } from '../components/folder.js';
 import { ListFolder } from '../components/listFolder.js';
 import { DeleteContainer } from '../components/deleteContainer.js';
+import { FolderObjectArray } from '../util/array.js';
 
 export class FolderView {
     constructor(folderController, dialog) {
@@ -8,7 +9,9 @@ export class FolderView {
         this._content = document.querySelector('.content-view');
         this._list = document.querySelector('.list-content-folders');
         this._cover = document.querySelector('.cover');
+        this._folderCount = document.querySelector('.folders-count');
         this.dialog = dialog;
+        this.folderObjects = new FolderObjectArray();
     }
 
     /** 
@@ -26,6 +29,7 @@ export class FolderView {
             this._content.appendChild(FOLDER_CARD);
             this._list.appendChild(LIST_FOLDER_CARD);
         }
+        this.renderFolderCount();
     }
 
     /**
@@ -39,6 +43,10 @@ export class FolderView {
 
         this._content.appendChild(FOLDER_CARD);
         this._list.appendChild(FOLDER_LIST_CARD);
+
+        // Updating the folder count
+        this.renderFolderCount();
+        this.dialog.hide();
     }
 
     /**
@@ -68,11 +76,26 @@ export class FolderView {
         const ALL_LIST_FOLDERS = this._list.children;
         for (let i = 0; i < ALL_FOLDERS.length; i++) {
             if (ALL_FOLDERS[i].id === folder.id) {
+                // Removing the html related to the given folder
                 this._content.removeChild(ALL_FOLDERS[i]);
                 this._list.removeChild(ALL_LIST_FOLDERS[i]);
+
+                // Removing the folder object 
+                this.folderObjects.remove(folder);
+
+                // Updating the folder count 
+                this.renderFolderCount();
             }
         }
         this.dialog.hide();
+    }
+
+    /**
+     * This method will render the number of folders 
+     * that are on the home screen
+     */
+    renderFolderCount() {
+        this._folderCount.textContent = this.folderObjects.size();
     }
 
     /**
@@ -92,6 +115,7 @@ export class FolderView {
      * @returns {Folder}
      */
     folder(folder) {
+        this.folderObjects.add(folder);
         return new Folder(folder, this);
     }
 

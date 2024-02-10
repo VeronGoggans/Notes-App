@@ -9,7 +9,7 @@ export class NoteView {
         this.noteController = noteController;
         this._content = document.querySelector('.content-view');
         this._list = document.querySelector('.list-content-notes');
-        this._cover = document.querySelector('.cover');
+        this._notesCount = document.querySelector('.notes-count');
         this.userFeedbackHandler = new UserFeedbackHandler();
         this.dialog = dialog;
         this.noteObjects = new NoteObjectArray();
@@ -30,13 +30,14 @@ export class NoteView {
         if (notes.length > 0) {
             for (let i = 0; i < notes.length; i++) {
                 const NOTE = notes[i];
-
                 const LIST_NOTE_CARD = this.listNote(NOTE);
                 const NOTE_CARD = this.note(NOTE);
 
                 this._content.appendChild(NOTE_CARD);
                 this._list.appendChild(LIST_NOTE_CARD);
             }
+            // Updating the note count
+            this.renderNoteCount();
         } else {
             this.userFeedbackHandler.noNotes(new NoNoteMessage());
         }
@@ -56,13 +57,14 @@ export class NoteView {
         if (this.noteObjects.size() === 0) {
             this.userFeedbackHandler.removeNoNotesMessage();
         }
-        // Creating the html for the note
         const LIST_NOTE_CARD = this.listNote(note);
         const NOTE_CARD = this.note(note);
 
-        // Adding the note html cards to the screen
         this._content.appendChild(NOTE_CARD);
         this._list.appendChild(LIST_NOTE_CARD);
+
+        // Updating the note count
+        this.renderNoteCount();
     }
 
     /** 
@@ -106,11 +108,16 @@ export class NoteView {
 
         for (let i = 0; i < ALL_NOTES.length; i++) {
             if (ALL_NOTES[i].id === note.id) {
+                
                 // Removing the html related to the given note 
                 this._content.removeChild(ALL_NOTES[i]);
                 this._list.removeChild(ALL_LIST_NOTES[i]);
+
                 // Removing the note object 
                 this.noteObjects.remove(note);
+
+                // Updating the note count
+                this.renderNoteCount();
                 // Checking if the note object array is empty
                 if (this.noteObjects.size() === 0) {
                     this.userFeedbackHandler.noNotes(new NoNoteMessage());
@@ -118,6 +125,14 @@ export class NoteView {
             }
         }
         this.dialog.hide();
+    }
+
+    /**
+     * This method will render the number of notes 
+     * that are inside a folder/subfolder
+     */
+    renderNoteCount() {
+        this._notesCount.textContent = this.noteObjects.size();
     }
 
     /**

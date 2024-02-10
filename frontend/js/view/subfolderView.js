@@ -1,7 +1,7 @@
 import { Folder } from "../components/folder.js";
 import { ListFolder, NoFolderMessage } from "../components/listFolder.js";
 import { DeleteContainer } from '../components/deleteContainer.js';
-import { SubfolderObjectArray } from "../util/array.js";
+import { FolderObjectArray } from "../util/array.js";
 import { UserFeedbackHandler } from "../handlers/notificationHandler.js";
 
 export class SubfolderView {
@@ -11,7 +11,8 @@ export class SubfolderView {
         this.userFeedbackHandler = new UserFeedbackHandler();
         this._content = document.querySelector('.content-view');
         this._list = document.querySelector('.list-content-folders');
-        this.subfoldersObjects = new SubfolderObjectArray();
+        this._subfolderCount = document.querySelector('.folders-count');
+        this.subfoldersObjects = new FolderObjectArray();
     }
     /** 
      * This method renders a array of subfolders and adds them to the UI.
@@ -20,6 +21,8 @@ export class SubfolderView {
      * @param {Array} subfolders
      */
     renderSubfolders(subfolders) {
+        // clear the array everytime this method gets called.
+        this.subfoldersObjects.clear();
         if (subfolders.length > 0) {
             for (let i = 0; i < subfolders.length; i++) {
                 const SUBFOLDER = subfolders[i];
@@ -29,6 +32,8 @@ export class SubfolderView {
                 this._content.appendChild(SUBFOLDER_CARD);
                 this._list.appendChild(SUBFOLDER_LIST_CARD);
             }
+             // Updating the subfolder count
+             this.renderSubfolderCount();
         } else {
             // give user feedback that this folder is empty
             this.userFeedbackHandler.noFolders(new NoFolderMessage());
@@ -45,13 +50,14 @@ export class SubfolderView {
         if (this.subfoldersObjects.size() === 0) {
             this.userFeedbackHandler.removeNoFoldersMessage();
         }
-        // Creating the html for the subfolder
         const SUBFOLDER_CARD = this.subfolder(subfolder);
         const SUBFOLDER_LIST_CARD = this.listSubfolder(subfolder);
 
-        // Adding the note html cards to the screen
         this._content.insertBefore(SUBFOLDER_CARD, this._content.firstChild);
         this._list.insertBefore(SUBFOLDER_LIST_CARD, this._list.firstChild);
+
+        // Updating the subfolder count
+        this.renderSubfolderCount();
         this.dialog.hide();
     }
 
@@ -81,11 +87,17 @@ export class SubfolderView {
 
         for (let i = 0; i < ALL_SUBFOLDERS.length; i++) {
             if (ALL_SUBFOLDERS[i].id === subfolder.id) {
-                // Removing the html related to the given subfolder 
+
+                // Removing the html related to the given subfolder
                 this._content.removeChild(ALL_SUBFOLDERS[i]);
                 this._list.removeChild(ALL_LIST_SUBFOLDERS[i]);
+
                 // Removing the subfolder object 
                 this.subfoldersObjects.remove(subfolder);
+
+                // Updating the subfolder count
+                this.renderSubfolderCount();
+
                 // Checking if there are no subfolder cards inside the list-view html element
                 if (this._list.children.length === 0) {
                     this.userFeedbackHandler.noFolders(new NoFolderMessage());
@@ -93,6 +105,14 @@ export class SubfolderView {
             }
         }
         this.dialog.hide();
+    }
+
+    /**
+     * This method will render the number of subfolders 
+     * that are inside a folder/subfolder
+     */
+    renderSubfolderCount() {
+        this._subfolderCount.textContent = this.subfoldersObjects.size();
     }
 
     /**

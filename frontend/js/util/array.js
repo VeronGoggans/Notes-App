@@ -125,7 +125,7 @@ export class NoteObjectArray {
 }
 
 
-export class SubfolderObjectArray {
+export class FolderObjectArray {
     constructor() {
         this.objects = [];
     }
@@ -133,19 +133,19 @@ export class SubfolderObjectArray {
     /**
      * This method adds the given subfolder to the array.
      * 
-     * @param {Dict} subfolder 
+     * @param {Dict} folder 
      */
-    add(subfolder) {
-        this.objects.push(subfolder);
+    add(folder) {
+        this.objects.push(folder);
     }
 
     /**
      * This method removes the given subfolder from the array.
      * 
-     * @param {Dict} subfolder 
+     * @param {Dict} folder
      */
-    remove(subfolder) {
-        const ID = subfolder.id;
+    remove(folder) {
+        const ID = folder.id;
 
         for (let i = 0; i < this.objects.length; i++) {
             if (this.objects[i].id === ID) {
@@ -157,12 +157,12 @@ export class SubfolderObjectArray {
     /**
      * This method updates the outdated subfolder inside the objects array.
      * 
-     * @param {Dict} subfolder 
+     * @param {Dict} folder 
      */
-    update(subfolder) {
+    update(folder) {
         for (let i = 0; i < this.objects.length; i++) {
-            if (this.objects[i].id === subfolder.id) {
-                this.objects[i].name = subfolder.name;
+            if (this.objects[i].id === folder.id) {
+                this.objects[i].name = folder.name;
             }
         }
     }
@@ -173,8 +173,8 @@ export class SubfolderObjectArray {
      * @param {String} subfolderId 
      * @returns a subfolder dictionary
      */
-    get(subfolderId) {
-        return this.objects.find(obj => obj.id === subfolderId)
+    get(folderId) {
+        return this.objects.find(obj => obj.id === folderId)
     }
 
     clear() {
