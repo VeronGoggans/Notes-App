@@ -21,7 +21,6 @@ export class SubfolderView {
      * @param {Array} subfolders
      */
     renderSubfolders(subfolders) {
-        // clear the array everytime this method gets called.
         this.subfoldersObjects.clear();
         if (subfolders.length > 0) {
             for (let i = 0; i < subfolders.length; i++) {
@@ -32,10 +31,10 @@ export class SubfolderView {
                 this._content.appendChild(SUBFOLDER_CARD);
                 this._list.appendChild(SUBFOLDER_LIST_CARD);
             }
-             // Updating the subfolder count
-             this.renderSubfolderCount();
+            // Updating the subfolder count
+            this.renderSubfolderCount();
         } else {
-            // give user feedback that this folder is empty
+            this.renderSubfolderCount();
             this.userFeedbackHandler.noFolders(new NoFolderMessage());
         }
     }

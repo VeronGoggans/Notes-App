@@ -25,7 +25,6 @@ export class NoteView {
      * @param {Array} notes 
      */
     renderNoteCards(notes) {
-        // clear the array everytime this method gets called.
         this.noteObjects.clear();
         if (notes.length > 0) {
             for (let i = 0; i < notes.length; i++) {
@@ -39,6 +38,7 @@ export class NoteView {
             // Updating the note count
             this.renderNoteCount();
         } else {
+            this.renderNoteCount();
             this.userFeedbackHandler.noNotes(new NoNoteMessage());
         }
     }

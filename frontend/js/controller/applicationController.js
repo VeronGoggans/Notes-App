@@ -43,6 +43,7 @@ export class ApplicationController {
         this.folderController.getFolders();
         this.applicationModel.clearFolderIdlist();
         this.applicationView.displayFolderName('Home');
+        document.querySelector('.notes-count').textContent = '0';
     }
 
     /**

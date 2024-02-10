@@ -18,9 +18,10 @@ export class FolderView {
      * This method renders a array of folders and adds them to the UI.
      * If the array is empty this method does nothing.
      * 
-     * @param {Array} folders is an array of folders.
+     * @param {Array} folders 
      */
     renderFolders(folders) {
+        this.folderObjects.clear();
         for (let i = 0; i < folders.length; i++) {
             const FOLDER = folders[i];
             const LIST_FOLDER_CARD = this.listFolder(FOLDER);
