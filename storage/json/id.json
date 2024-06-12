@@ -10,11 +10,15 @@
         },
         {
             "entity": "note",
-            "id": "n-639"
+            "id": "n-640"
         },
         {
             "entity": "template",
             "id": "t-1"
+        },
+        {
+            "entity": "flash-cards",
+            "id": "fcb-1"
         }
     ]
 }

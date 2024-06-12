@@ -1,7 +1,7 @@
 from src.backend.domain.note import Note
 from src.backend.presentation.request_bodies.note.put_note_request import PutNoteRequest
 from src.backend.util.calendar import Calendar
-from src.backend.domain.note_factory import NoteFactory
+from src.backend.domain.factories.note_factory import NoteFactory
 from src.backend.util.folder_finder import FolderFinder
 
 class NoteManager:

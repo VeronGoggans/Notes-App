@@ -91,12 +91,37 @@
 #             print(colorize_string('To weak, insert a number higher then 8.', 167))
 #     else:
 #         looping = False
+import re 
+class FlashCard:
+    def __init__(self, name, content, result = None):
+        self.name = name
+        self.content = content
+        self.result = result
+
+file_location = 'C:/Users/jsvgo\Web Dev/In progress/Note Taking App/storage/flashcard_bundles/flashcard_bundle-fcb-1.txt'
+
+    
+def deserialize_flashcards(file_path):
+    flashcards = []
+
+    with open(file_path, 'r', encoding='utf-8') as file:
+        text = file.read()
+
+    sections = re.split(r'\n\n+', text)
+    for section in sections:
+        lines = section.split('\n')
+        if len(lines) >= 2:
+            name = lines[0]
+            content = '\n'.join(lines[1:])
+            flashcard = FlashCard(name, content)
+            flashcards.append(flashcard)
+
+    return flashcards
 
 
-fruits = ['cranberry', 'peach', 'watermelon', 'strawberry', 'banana']
 
-for fruit in fruits:
-    if fruit == 'strawberry':
-        print('favorite')
-        continue
-    print('Good')
+    
+objects = deserialize_flashcards(file_location)
+print(f'Flash cards inside this bundle: {len(objects)}')
+for object in objects:
+    print(f'\nName: {object.name}\nContent: {object.content}')

@@ -4,7 +4,7 @@ from src.backend.presentation.request_bodies.note.put_note_request import PutNot
 from src.backend.presentation.request_bodies.note.del_note_request import DeleteNoteRequest
 from src.backend.presentation.request_bodies.note.move_note_request import MoveNoteRequest
 from src.backend.presentation.request_bodies.note.put_note_color_request import PutNoteColorRequest
-from src.backend.domain.note_factory import NoteFactory
+from src.backend.domain.factories.note_factory import NoteFactory
 from src.backend.domain.enums.responseMessages import Status
 from src.backend.data.file.json_manager import JsonManager
 import os 

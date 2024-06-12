@@ -20,7 +20,7 @@
         },
         {
             "id": "f-49",
-            "name": "Github\ud83d\ude0e",
+            "name": "Github",
             "color": "rgb(255, 255, 255)",
             "notes": [
                 {
@@ -200,7 +200,7 @@
                             "bookmark": false,
                             "favorite": false,
                             "color": "white",
-                            "last_edit": "11/06/2024 18:47",
+                            "last_edit": "12/06/2024 00:04",
                             "creation": "30/05/2024"
                         },
                         {
@@ -246,9 +246,9 @@
                     "title": "Mogelijke bijbaan",
                     "content": "storage/notes/note-n-585.txt",
                     "bookmark": false,
-                    "favorite": true,
+                    "favorite": false,
                     "color": "white",
-                    "last_edit": "06/06/2024 20:23",
+                    "last_edit": "12/06/2024 00:26",
                     "creation": "04/05/2024"
                 },
                 {

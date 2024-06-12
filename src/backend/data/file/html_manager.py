@@ -1,8 +1,8 @@
 import os
 
-class HTMLManager:  
+class FileManager:  
     @staticmethod
-    def save(html_content: str, note_id: int):
+    def save(file_content: str, entity_id: int):
         """
         Save HTML content to a new Text file.
 
@@ -14,13 +14,21 @@ class HTMLManager:
             str: The file path where the HTML content is saved.
         """
         BASE_URL = os.getcwd()
-        notes_folder = 'storage/notes'
-        file_name = f'note-{note_id}.txt'
-        file_path = f'{notes_folder}/{file_name}'
+        entity_folder = None 
+        file_name = None 
+
+        if 'fcb' in entity_id:
+            entity_folder = 'storage/flashcard_bundles'
+            file_name = f'flashcard_bundle-{entity_id}.txt'
+        elif 'n' in entity_id:
+            entity_folder = 'storage/notes'
+            file_name = f'note-{entity_id}.txt'
+        
+        file_path = f'{entity_folder}/{file_name}'
 
         try:
             with open(f'{BASE_URL}/{file_path}', 'w', encoding='utf-8') as file:
-                content_bytes = html_content.encode("utf-8")
+                content_bytes = file_content.encode("utf-8")
                 content_str = content_bytes.decode("utf-8")
                 file.write(content_str)
                 return file_path
@@ -48,7 +56,7 @@ class HTMLManager:
     
 
     @staticmethod
-    def update(file_path: str, updated_html_content: str):
+    def update(file_path: str, updated_file_content: str):
         """
         Update the content of a file at the specified path.
 
@@ -60,9 +68,9 @@ class HTMLManager:
             None: This method does not return a value.
         """
         try:
-            latest_version = HTMLManager.get(file_path)
+            latest_version = FileManager.get(file_path)
             with open(file_path, 'w', encoding="utf-8") as file:
-                content_bytes = updated_html_content.encode("utf-8")
+                content_bytes = updated_file_content.encode("utf-8")
                 content_str = content_bytes.decode("utf-8")
                 file.write(content_str)
         except Exception as e:
